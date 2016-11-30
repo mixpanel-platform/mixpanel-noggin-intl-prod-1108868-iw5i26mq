@@ -1,15 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Events and Properties</title>
+    <!--mixpanel platform -->
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
-    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <!-- mixpanel platform -->
+    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script> <!--/mixpanel platform -->
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+    <!-- datatables css -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css">
+
+    <!-- datables js requirements-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+    
+    <!--font awesome icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!--custom styles-->
+    <link rel="stylesheet" href="css/master-styles.css">
+
   </head>
-  <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
-    <script>
-      // Run queries and display results here
+  <body class="mixpanel-platform-body" style="background-color: white;">
+    <div class="container-fluid p-t-2">
+      <div class="row flex-items-sm-center">
+        <div class="col-sm-12">
+            <h1 class="text-xs-center">Project Events and Properties</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-items-sm-center">
+      <div class="col-sm-12">
+          <div id="date-picker"></div>
+      </div>
+    </div>
+  </div>
+    <div class="container-fluid p-t-2" id="loading-container">
+      <div class="row">
+        <div class="col-sm-12 text-xs-center">
+          <i class="fa fa-spinner" aria-hidden="true" style="font-size:80px"></i>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid p-t-2" id='tables-and-charts'>
+      <div class="row" style="margin-top: 25px;">
+        <div class="col-sm-12"><!-- start of div for new user table -->
+          <table id='event-table' class="table table-striped text-center" cellspacing="0" width="100%">
+            <thead>
+              <tr id='table-header-row' style="background-color: white; display:none;">
+                <th>Event</th>
+                <th>Mixpanel Library</th>
+                <th>Event Count</th>
+              </tr>
+            <thead>
+          </table>
+        </div><!-- /end ofdiv for new user table -->
+      </div>
+      <div class="row" style="margin-top: 25px;">
+        <div class="col-sm-12"><!-- start of div products sold by day table -->
+          <table id='properties-table' class="table table-striped text-center" cellspacing="0" width="100%">
+            <thead>
+              <tr class="text-center" id='table-header-row' style="background-color: white; display:none;">
+                <th>Property Name</th>
+                <th>Percentage Collected</th>
+                <th>Event</th>
+                <th>Mixpanel Library</th>
+              </tr>
+            <thead>
+          </table>
+        </div><!-- end of div products sold by day tab-->
+      </div> <!-- /end  of div for products sold per month table -->
+    </div>
+    <div class="row" style="margin-top: 25px; display: none;">
+      <div class="col-sm-12" id="full-table-container"><!-- start of div products sold by day table -->
+        <table id='full-table' class="table text-center" cellspacing="0" width="100%">
+          <thead>
+            <tr class="text-center" id="full-table-header-row" style="background-color: white;">
+            </tr>
+          <thead>
+        </table>
+      </div><!-- end of div products sold by day tab-->
+    </div> <!-- /end  of div for products sold per month table -->
+  </div>
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-sm-12">
+      <div class="center-block text-xs-center" >
+        <button type="button" id='export' class="mp-button button" name="Export CSV" onclick="exportAllData()" style="display:none;">Export All Data</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  function exportAllData() {
+    $("#full-table_wrapper .dt-buttons .buttons-csv").click()
+  }
+  var dateSelector = $('#date-picker').MPDatepicker();    // Create a date picker
+  console.log(dateSelector);
+  </script>
+    <script type="text/javascript"> // mixpanel tracking
+    //info for tracking
+      var url = window.document.referrer.split('/mpplatform')[0]
+      var id = url.split('report/')[1]
+      var reportLoaded = {
+        'event': 'Report Loaded',
+        'properties': {
+          'token': 'ca9cd5c31c3325af1f911aaaf633ca44',
+          'Report': 'Spec Sheet',
+          'client': 'internal',
+          'distinct_id': id,
+          'Project id': id,
+          'Local Hour': new Date().getHours(),
+          'Day of the week': new Date().getDay()
+        }
+      }
+      var stringVersion = JSON.stringify(reportLoaded)
+      var encoded = window.btoa(stringVersion)
+      $.ajax({
+        url: "https://api.mixpanel.com/track/?data="+encoded
+      })
     </script>
+    <!-- graph events table -->
+    <script type="text/javascript" src="js/table.js"></script>
+    <!-- helper functions -->
+    <script type="text/javascript" src="js/helperFunction.js"></script>
   </body>
 </html>
